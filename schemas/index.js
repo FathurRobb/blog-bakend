@@ -1,8 +1,15 @@
 const mongoose = require("mongoose");
+require('dotenv').config();
 
 const connect = () => {
+    var environment = process.env.NODE_ENV || 'development';
+
+    const option = {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    };
     mongoose
-        .connect("mongodb://127.0.0.1:27017/db_blog")
+        .connect(environment === 'development' ? process.env['MONGO_DEV'] : process.env['MONGO_PROD'], option)
         .catch(err => console.log(err));
 };
 
